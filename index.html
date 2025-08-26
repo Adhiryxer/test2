@@ -1,1 +1,1072 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sapphire Jewellery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Core palette taken from the reference: rich browns + golds */
+      --bg-deep: #2a140f;
+      --bg: #3a1d16;
+      --bg-soft: #4a231a;
+      --card: #2f1813;
+      --text: #f8efe8;
+      --muted: #d9c9bf;
+      --accent: #e9b26b; /* warm gold */
+      --accent-2: #f0c48a; /* lighter gold */
+      --accent-3: #c7803a; /* deeper gold */
+      --rose: #c85a3e; /* copper rose highlight */
+      --chip: #7b4b3d;
+      --shadow: rgba(0,0,0,.45);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --radius-lg: 22px;
+      --grad-hero: radial-gradient(1200px 700px at 10% 0%, #4a281f 0%, #341a14 45%, #2a140f 100%);
+      --grad-block: linear-gradient(160deg, #4a2019 0%, #2e1712 60%);
+      --grad-rose: linear-gradient(180deg, #b94e36 0%, #7a2c1f 100%);
+      --ring-glow: 0 0 0 2px rgba(233,178,107,.12), 0 20px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg-deep);
+      line-height: 1.5;
+    }
+
+    a { color: var(--accent-2); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(26, 13, 10, .6);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(233,178,107,.15);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .brand {
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--accent-2);
+      font-size: 24px;
+    }
+    .menu { display: flex; gap: 22px; align-items: center; }
+    .menu a { color: var(--muted); font-weight: 500; }
+    .menu a:hover { color: var(--text); }
+    .hamburger {
+      display: none;
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1px solid rgba(233,178,107,.25);
+      background: rgba(255,255,255,.04);
+      color: var(--accent-2);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hamburger:hover {
+      background: rgba(233,178,107,.1);
+      border-color: rgba(233,178,107,.4);
+    }
+    .hamburger span { width: 18px; height: 2px; background: var(--accent-2); position: relative; display: block; transition: all 0.2s ease; }
+    .hamburger span::before, .hamburger span::after { content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--accent-2); transition: all 0.2s ease; }
+    .hamburger span::before { top: -6px; }
+    .hamburger span::after { top: 6px; }
+    .hamburger.active span { background: transparent; }
+    .hamburger.active span::before { transform: rotate(45deg); top: 0; }
+    .hamburger.active span::after { transform: rotate(-45deg); top: 0; }
+
+    /* Mobile header padding */
+    @media (max-width: 768px) {
+      header { padding: 0 16px; }
+      .nav { padding: 16px 0; }
+      .hamburger { margin-right: 8px; }
+    }
+    
+    @media (max-width: 640px) {
+      header { padding: 0 12px; }
+      .nav { padding: 14px 0; }
+      .hamburger { margin-right: 6px; }
+      .rates { margin-bottom: 24px; }
+    }
+    
+    @media (max-width: 480px) {
+      header { padding: 0 8px; }
+      .nav { padding: 12px 0; }
+      .hamburger { margin-right: 4px; }
+      .rates { margin-bottom: 20px; }
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--grad-hero);
+      padding: 72px 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; inset: -40% -10% auto -10%;
+      height: 120%;
+      background: radial-gradient(600px 220px at 70% 40%, rgba(233,178,107,.18), transparent 60%), radial-gradient(900px 420px at 20% 10%, rgba(124,75,61,.25), transparent 60%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .9fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .panel {
+      background: var(--grad-block);
+      border: 1px solid rgba(233,178,107,.18);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--ring-glow);
+      position: relative;
+      overflow: hidden;
+    }
+    .panel.soft { background: linear-gradient(180deg, #2f1712 0%, #23100d 100%); }
+    .panel.rose { background: var(--grad-rose); }
+    .panel .pad { padding: 28px; }
+    .eyebrow { color: var(--accent-2); letter-spacing: .24em; text-transform: uppercase; font-size: 12px; }
+    .display {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(34px, 6vw, 60px);
+      line-height: 1.05;
+      font-weight: 600;
+    }
+    .button {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 18px; border-radius: 999px; background: var(--accent-3);
+      color: #1b0f0b; font-weight: 700; border: 1px solid rgba(0,0,0,.25);
+      box-shadow: 0 10px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.3);
+    }
+    .button.alt { background: var(--accent-2); }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(233,178,107,.2);
+      border-radius: 999px; color: var(--muted); font-weight: 600; font-size: 12px;
+    }
+
+    /* Placeholder media cards */
+    .media {
+      height: 220px;
+      background: radial-gradient(220px 120px at 60% 40%, rgba(233,178,107,.35), rgba(233,178,107,.05) 60%, transparent 70%), linear-gradient(135deg, #2c1511 0%, #4a231a 100%);
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+      background-size: cover; background-position: center;
+    }
+    .media.square { height: 280px; }
+
+    /* Collections row */
+    .collections {
+      padding: 30px 0 10px;
+      background: linear-gradient(180deg, #2a140f 0%, #321912 100%);
+      border-top: 1px solid rgba(233,178,107,.14);
+      border-bottom: 1px solid rgba(233,178,107,.1);
+    }
+    .headline { font-family: "Playfair Display", serif; font-size: 28px; }
+    .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 16px; }
+    .card {
+      background: #2b1611;
+      border: 1px solid rgba(233,178,107,.16);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+    .card .img { height: 110px; background: radial-gradient(120px 80px at 60% 30%, rgba(240,196,138,.35), transparent 60%), linear-gradient(160deg, #3a1b14, #1c0e0b); background-size: cover; background-position: center; }
+    .card .body { padding: 10px 12px 12px; display: flex; align-items: center; justify-content: space-between; }
+    .price { color: var(--accent-2); font-weight: 700; }
+
+    /* Feature band */
+    .feature {
+      padding: 54px 0;
+      background: radial-gradient(900px 480px at 50% 20%, rgba(233,178,107,.15), transparent 60%), linear-gradient(180deg, #2a140f 0%, #3a1d16 100%);
+    }
+    .feature-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
+    .feature .portrait { height: 340px; border-radius: var(--radius-lg); background: radial-gradient(160px 120px at 60% 30%, rgba(233,178,107,.3), transparent 60%), #5b281e; border: 1px solid rgba(233,178,107,.2); box-shadow: var(--ring-glow); background-size: cover; background-position: center; }
+
+    /* Split band */
+    .split {
+      padding: 44px 0 28px;
+      background: linear-gradient(180deg, #2d1611 0%, #27130f 100%);
+    }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .tile { background: #351b14; border: 1px solid rgba(233,178,107,.14); border-radius: var(--radius-lg); overflow: hidden; }
+    .tile .content { padding: 26px; }
+    .tile .image { height: 200px; background: radial-gradient(120px 120px at 60% 40%, rgba(233,178,107,.32), transparent 60%), #4e241a; background-size: cover; background-position: center; }
+
+    /* Slider */
+    .slider { position: relative; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid rgba(233,178,107,.18); box-shadow: var(--ring-glow); }
+    .slides { display: flex; transition: transform .5s ease; }
+    .slide { min-width: 100%; height: 360px; background: #3b1c15 center/cover no-repeat; }
+    .slider .control { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.35); border: 1px solid rgba(233,178,107,.35); color: var(--text); width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; cursor: pointer; z-index: 10; }
+    .slider .prev { left: 12px; }
+    .slider .next { right: 12px; }
+    .dots { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(233,178,107,.35); cursor: pointer; transition: background 0.2s ease; }
+    .dot.active { background: var(--accent-2); }
+    .dot:hover { background: var(--accent-2); }
+
+    /* Prevent horizontal scroll */
+    body { overflow-x: hidden; }
+    .container { overflow-x: hidden; }
+    * { max-width: 100%; }
+
+    /* Gold rates */
+    .rates { background: linear-gradient(180deg, #31170f 0%, #2a140f 100%); padding: 16px 0; border-top: 1px solid rgba(233,178,107,.14); border-bottom: 1px solid rgba(233,178,107,.14); }
+    .rates .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: center; }
+    .rate-card { background: #2b1611; border: 1px solid rgba(233,178,107,.2); border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--ring-glow); }
+    .rate-card .k { font-family: "Playfair Display", serif; font-size: 22px; }
+    .rate-card .v { color: var(--accent-2); font-weight: 800; font-size: 20px; }
+    .rate-updated { text-align: right; color: var(--muted); font-size: 12px; }
+
+    /* Schemes */
+    .schemes { padding: 36px 0; background: linear-gradient(180deg, #2a140f 0%, #321912 100%); }
+    .scheme-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 22px; }
+    .scheme-list { background: #2b1611; border: 1px solid rgba(233,178,107,.16); border-radius: var(--radius-lg); overflow: hidden; }
+    .scheme-item { padding: 14px 16px; border-bottom: 1px solid rgba(233,178,107,.1); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .scheme-item:hover { background: rgba(233,178,107,.05); }
+    .scheme-item.active { background: rgba(233,178,107,.08); }
+    .scheme-info { display: flex; flex-direction: column; gap: 4px; }
+    .scheme-name { font-weight: 600; color: var(--text); }
+    .scheme-number { font-size: 12px; color: var(--accent-2); font-family: monospace; }
+    .scheme-details { background: #351b14; border: 1px solid rgba(233,178,107,.16); border-radius: var(--radius-lg); padding: 22px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(233,178,107,.28); color: var(--accent-2); font-weight: 700; font-size: 12px; }
+    
+    /* Scheme Meta Details */
+    .scheme-meta { margin-top: 16px; }
+    .meta-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(233,178,107,.1); }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-label { color: var(--muted); font-weight: 500; }
+    .meta-value { color: var(--text); font-weight: 600; }
+    .status-active { color: #4ade80; }
+    .status-closed { color: #f87171; }
+    
+    /* Progress Graph */
+    .progress-container { margin-top: 16px; }
+    .progress-bar { 
+      height: 8px; 
+      background: rgba(233,178,107,.2); 
+      border-radius: 4px; 
+      overflow: hidden; 
+      margin-bottom: 12px; 
+    }
+    .progress-fill { 
+      height: 100%; 
+      background: linear-gradient(90deg, var(--accent-2), var(--accent)); 
+      border-radius: 4px; 
+      transition: width 0.5s ease; 
+      width: 16.67%; /* 1/6 for 6 months, 8.33% for 12 months */
+    }
+    .progress-labels { 
+      display: flex; 
+      justify-content: space-between; 
+      color: var(--muted); 
+      font-size: 12px; 
+      margin-bottom: 16px; 
+    }
+    .progress-stats { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 16px; 
+    }
+    .stat-item { 
+      text-align: center; 
+      padding: 12px; 
+      background: rgba(233,178,107,.05); 
+      border-radius: 8px; 
+      border: 1px solid rgba(233,178,107,.1); 
+    }
+    .stat-label { 
+      display: block; 
+      color: var(--muted); 
+      font-size: 12px; 
+      margin-bottom: 4px; 
+    }
+    .stat-value { 
+      color: var(--accent-2); 
+      font-weight: 700; 
+      font-size: 16px; 
+    }
+
+    @media (max-width: 1024px) {
+      .scheme-grid { grid-template-columns: 1fr; }
+      .rates .row { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* CTA band */
+    .cta {
+      margin: 46px 0 70px;
+      padding: 42px 0 54px;
+      background: linear-gradient(180deg, #7a3b28 0%, #3f2018 100%);
+      border-top: 1px solid rgba(233,178,107,.18);
+      border-bottom: 1px solid rgba(233,178,107,.18);
+    }
+    .cta .panel { background: linear-gradient(160deg, #813e29 0%, #52271d 100%); }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(180deg, #4a231a 0%, #2a140f 100%);
+      border-top: 1px solid rgba(233,178,107,.18);
+      padding: 40px 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 24px; }
+    .footer-col h4 { margin: 0 0 10px; font-family: "Playfair Display", serif; color: var(--text); font-weight: 600; }
+    .footer-col a { display: block; color: var(--muted); margin: 6px 0; }
+    .footer-col a:hover { color: var(--text); }
+
+    /* Utilities */
+    .sp-12 { height: 12px; }
+    .sp-16 { height: 16px; }
+    .sp-24 { height: 24px; }
+    .sp-32 { height: 32px; }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .container { width: 95vw; }
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+      .cards { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 20px; }
+      .split-grid { grid-template-columns: 1fr; gap: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .scheme-grid { grid-template-columns: 1fr; gap: 20px; }
+      .rates .row { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 16px; }
+      .cards { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 18px; }
+      .split-grid { grid-template-columns: 1fr; gap: 18px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+      .scheme-grid { grid-template-columns: 1fr; gap: 18px; }
+      .rates .row { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .hero { padding: 60px 0 40px; }
+      .feature { padding: 44px 0; }
+      .split { padding: 36px 0 24px; }
+      .schemes { padding: 28px 0; }
+    }
+
+    @media (max-width: 768px) {
+      .container { width: 96vw; padding: 0 16px; }
+      .nav { padding: 16px 0; }
+      .hamburger { display: inline-flex; }
+      .menu { 
+        position: fixed; 
+        inset: 80px 16px auto 16px; 
+        flex-direction: column; 
+        background: rgba(42, 20, 15, 0.95); 
+        backdrop-filter: blur(10px);
+        padding: 20px; 
+        border: 1px solid rgba(233,178,107,.25); 
+        border-radius: 16px; 
+        gap: 12px; 
+        box-shadow: 0 25px 80px rgba(0,0,0,.7); 
+        display: none; 
+        animation: slideDown 0.3s ease;
+      }
+      .menu.open { display: flex; }
+      .menu a { 
+        padding: 12px 16px; 
+        border-radius: 8px; 
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+      }
+      .menu a:hover { 
+        background: rgba(233,178,107,.1); 
+        border-color: rgba(233,178,107,.3);
+        color: var(--text); 
+      }
+      .brand { font-size: 22px; }
+      .hero { padding-top: 48px; padding-bottom: 32px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 14px; }
+      .cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 16px; }
+      .scheme-grid { grid-template-columns: 1fr; gap: 16px; }
+      .rates .row { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .rate-card { padding: 12px 14px; }
+      .rate-card .k { font-size: 18px; }
+      .rate-card .v { font-size: 18px; }
+      .display { font-size: clamp(28px, 8vw, 48px); }
+      .headline { font-size: 24px; }
+      .panel .pad { padding: 20px; }
+      .feature .portrait { height: 280px; }
+      .tile .image { height: 160px; }
+      .slider { height: 300px; }
+      .slide { height: 300px; }
+      /* Mobile slider fixes */
+      .slider .control { width: 36px; height: 36px; font-size: 18px; }
+      .slider .prev { left: 8px; }
+      .slider .next { right: 8px; }
+      /* Mobile padding improvements */
+      .container { padding: 0 16px; }
+      .hero { padding: 48px 0 32px; }
+      .collections { padding: 32px 0 16px; }
+      .feature { padding: 44px 0; }
+      .split { padding: 36px 0 24px; }
+      .schemes { padding: 28px 0; }
+      .cta { margin: 46px 0 70px; padding: 42px 0 54px; }
+      .footer { padding: 40px 0 24px; }
+      .card .body { padding: 12px 14px 14px; }
+      .tile .content { padding: 20px; }
+      .scheme-item { padding: 16px 18px; }
+      .scheme-details { padding: 20px; }
+      /* Gold rates mobile spacing */
+      .rates { margin-bottom: 24px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: 98vw; padding: 0 12px; }
+      .nav { padding: 14px 0; }
+      .menu { gap: 8px; inset: 75px 12px auto 12px; padding: 18px; }
+      .menu a { padding: 14px 18px; }
+      .brand { font-size: 20px; }
+      .hamburger { width: 38px; height: 38px; }
+      .hero { padding-top: 40px; padding-bottom: 28px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 12px; }
+      .cards { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 14px; }
+      .scheme-grid { grid-template-columns: 1fr; gap: 14px; }
+      .rates .row { grid-template-columns: 1fr; gap: 6px; }
+      .rate-card { padding: 10px 12px; }
+      .rate-card .k { font-size: 16px; }
+      .rate-card .v { font-size: 16px; }
+      .display { font-size: clamp(24px, 10vw, 36px); }
+      .headline { font-size: 20px; }
+      .panel .pad { padding: 16px; }
+      .feature .portrait { height: 240px; }
+      .tile .image { height: 140px; }
+      .slider { height: 250px; }
+      .slide { height: 250px; }
+      .slider .control { width: 32px; height: 32px; font-size: 16px; }
+      .slider .prev { left: 6px; }
+      .slider .next { right: 6px; }
+      .collections { padding: 20px 0 8px; }
+      .feature { padding: 32px 0; }
+      .split { padding: 28px 0 20px; }
+      .schemes { padding: 24px 0; }
+      .cta { margin: 32px 0 50px; padding: 32px 0 40px; }
+      /* Enhanced mobile padding */
+      .hero { padding: 40px 0 28px; }
+      .collections { padding: 28px 0 16px; }
+      .feature { padding: 36px 0; }
+      .split { padding: 32px 0 24px; }
+      .schemes { padding: 28px 0; }
+      .cta { margin: 36px 0 56px; padding: 36px 0 44px; }
+      .footer { padding: 36px 0 28px; }
+      .card .body { padding: 14px 16px 16px; }
+      .tile .content { padding: 18px; }
+      .scheme-item { padding: 18px 20px; }
+      .scheme-details { padding: 18px; }
+      .rate-card { padding: 12px 16px; }
+      .panel .pad { padding: 18px; }
+      /* Gold rates mobile spacing */
+      .rates { margin-bottom: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { width: 99vw; padding: 0 8px; }
+      .nav { padding: 12px 0; }
+      .brand { font-size: 18px; }
+      .hamburger { width: 36px; height: 36px; }
+      .menu { inset: 70px 8px auto 8px; padding: 16px; gap: 6px; }
+      .menu a { padding: 12px 16px; font-size: 14px; }
+      .hero { padding-top: 32px; padding-bottom: 24px; }
+      .hero-grid { gap: 10px; }
+      .cards { grid-template-columns: 1fr; gap: 8px; }
+      .footer-grid { gap: 12px; }
+      .scheme-grid { gap: 12px; }
+      .rates .row { gap: 4px; }
+      .rate-card { padding: 8px 10px; margin-bottom: 10px;}
+      .rate-card .k { font-size: 14px; }
+      .rate-card .v { font-size: 14px; }
+      .display { font-size: clamp(20px, 12vw, 28px); }
+      .headline { font-size: 18px; }
+      .panel .pad { padding: 14px; }
+      .feature .portrait { height: 200px; }
+      .tile .image { height: 120px; }
+      .slider { height: 200px; }
+      .slide { height: 200px; }
+      .slider .control { width: 28px; height: 28px; font-size: 14px; }
+      .slider .prev { left: 4px; }
+      .slider .next { right: 4px; }
+      .collections { padding: 16px 0 6px; }
+      .feature { padding: 24px 0; }
+      .split { padding: 20px 0 16px; }
+      .schemes { padding: 20px 0; }
+      .cta { margin: 24px 0 40px; padding: 24px 0 32px; }
+      .footer { padding: 32px 0 20px; }
+      /* Small mobile padding optimization */
+      .hero { padding: 32px 0 24px; }
+      .collections { padding: 24px 0 12px; }
+      .feature { padding: 28px 0; }
+      .split { padding: 24px 0 20px; }
+      .schemes { padding: 24px 0; }
+      .cta { margin: 28px 0 44px; padding: 28px 0 36px; }
+      .footer { padding: 28px 0 24px; }
+      .card .body { padding: 16px 18px 18px; }
+      .tile .content { padding: 16px; }
+      .scheme-item { padding: 20px 22px; }
+      .scheme-details { padding: 16px; }
+      .rate-card { padding: 10px 14px; }
+      .panel .pad { padding: 16px; }
+      .slider { margin: 20px 0 12px; }
+      .dots { margin-top: 12px; }
+      /* Gold rates mobile spacing */
+      .rates { margin-bottom: 16px; }
+    }
+
+    /* Mobile menu animations */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">Sapphire®</div>
+      <button class="hamburger" id="navToggle" aria-label="Toggle Menu"><span></span></button>
+      <nav class="menu" id="mainMenu">
+        <a href="#">Brands</a>
+        <a href="#">Collections</a>
+        <a href="#">Inspiration</a>
+        <a href="#">Shop</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Gold rates bar -->
+    <section class="rates" id="rates">
+      <div class="container">
+        <div class="row">
+          <div class="rate-card">
+            <div class="k">24 Carat (AED/g)</div>
+            <div class="v" id="rate24">AED 290.00</div>
+          </div>
+          <div class="rate-card">
+            <div class="k">22 Carat (AED/g)</div>
+            <div class="v" id="rate22">AED 270.00</div>
+          </div>
+          <div class="rate-updated" id="rateUpdated">Updated: just now</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schemes section -->
+    <section class="schemes" id="schemes">
+      <div class="container">
+        <div class="headline" style="margin-bottom: 12px;">Savings schemes</div>
+        <div class="scheme-grid">
+          <div class="scheme-list" id="schemeList">
+            <div class="scheme-item active" data-id="investment">
+              <div class="scheme-info">
+                <span class="scheme-name">Investment Scheme</span>
+                <span class="scheme-number">GIS/0001</span>
+              </div>
+              <span class="badge">Investment</span>
+            </div>
+            <div class="scheme-item" data-id="monthly6">
+              <div class="scheme-info">
+                <span class="scheme-name">Monthly Scheme</span>
+                <span class="scheme-number">MIS/0001</span>
+              </div>
+              <span class="badge">6 months</span>
+            </div>
+            <div class="scheme-item" data-id="monthly12">
+              <div class="scheme-info">
+                <span class="scheme-name">Monthly Scheme</span>
+                <span class="scheme-number">MIS/0002</span>
+              </div>
+              <span class="badge">12 months</span>
+            </div>
+          </div>
+          <div class="scheme-details" id="schemeDetails">
+            <h3 style="margin:0 0 8px" id="schemeTitle">Investment Scheme</h3>
+            <div class="scheme-meta">
+              <div class="meta-row">
+                <span class="meta-label">Scheme Number:</span>
+                <span class="meta-value" id="schemeNumber">GIS/0001</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Carat:</span>
+                <span class="meta-value" id="schemeCarat">24</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Start Date:</span>
+                <span class="meta-value" id="schemeStartDate">01/01/2025</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">End Date:</span>
+                <span class="meta-value" id="schemeEndDate">-</span>
+              </div>
+              <div class="meta-row" id="monthlyDetails" style="display: none;">
+                <span class="meta-label">Bonus:</span>
+                <span class="meta-value" id="schemeBonus">With Bonus</span>
+              </div>
+              <div class="meta-row" id="monthlyDetails2" style="display: none;">
+                <span class="meta-label">Amount:</span>
+                <span class="meta-value" id="schemeAmount">AED 500/month</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Status:</span>
+                <span class="meta-value status-active" id="schemeStatus">Active</span>
+              </div>
+              <div class="meta-row" id="monthlyDetails3" style="display: none;">
+                <span class="meta-label">Penalty:</span>
+                <span class="meta-value" id="schemePenalty">AED 50</span>
+              </div>
+              <div class="meta-row" id="monthlyDetails4" style="display: none;">
+                <span class="meta-label">Next Installment:</span>
+                <span class="meta-value" id="schemeNextInstallment">01/02/2025</span>
+              </div>
+            </div>
+            
+            <!-- Progressive Graph for Monthly Schemes -->
+            <div id="schemeGraph" style="display: none; margin-top: 20px;">
+              <h4 style="margin: 0 0 12px; color: var(--accent-2);">Progress Graph</h4>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-labels">
+                  <span>Start</span>
+                  <span id="progressCurrent">Month 1</span>
+                  <span id="progressEnd">Month 6</span>
+                </div>
+              </div>
+              <div class="progress-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Completed:</span>
+                  <span class="stat-value" id="completedMonths">1/6</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Remaining:</span>
+                  <span class="stat-value" id="remainingMonths">5 months</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="panel soft">
+          <div class="pad">
+            <div class="eyebrow">Exquisite Craftsmanship</div>
+            <div class="sp-16"></div>
+            <h1 class="display">Unleash the shining beauty</h1>
+            <div class="sp-24"></div>
+            <a class="button" href="#collections">Find a store</a>
+            <div class="sp-12"></div>
+            <span class="chip">Gold • Diamond • 18k Plated</span>
+          </div>
+        </article>
+
+        <article class="panel rose">
+          <div class="media square" style="background-image:url('https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?q=80&w=1200&auto=format&fit=crop');"></div>
+          <div class="pad">
+            <div class="eyebrow">18K Gold Plated</div>
+            <div class="sp-12"></div>
+            <strong>Designer Portrait</strong>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="media square" style="background-image:url('https://images.unsplash.com/photo-1617038260897-1b808f6f3f3f?q=80&w=1200&auto=format&fit=crop');"></div>
+          <div class="pad">
+            <div class="eyebrow">Handpicked</div>
+            <div class="sp-12"></div>
+            <strong>Designer Jewellery</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Collections -->
+    <section id="collections" class="collections">
+      <div class="container">
+        <div class="headline">New jewellery collections</div>
+        <div class="cards">
+          <div class="card">
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="body"><span>Bold Huggies</span><span class="price">$86</span></div>
+          </div>
+          <div class="card">
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1603566234499-412c9b3d2348?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="body"><span>Crystal Pear Ring</span><span class="price">$98</span></div>
+          </div>
+          <div class="card">
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1599643477752-9d0b1f2862f9?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="body"><span>Molten Hoops</span><span class="price">$184</span></div>
+          </div>
+          <div class="card">
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="body"><span>Orbit Cuff</span><span class="price">$139</span></div>
+          </div>
+          <div class="card">
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1617038136350-8f0e2f9a9ae8?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="body"><span>Horseshoe Pendant</span><span class="price">$245</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image slider section -->
+    <section class="container" style="margin: 28px auto 10px;">
+      <div class="headline" style="margin-bottom: 12px;">Featured highlights</div>
+      <div class="slider" id="heroSlider">
+        <div class="slides">
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1400&auto=format&fit=crop');"></div>
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1556228578-0e0b0f7a1ca8?q=80&w=1400&auto=format&fit=crop');"></div>
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520962922320-2038eebab146?q=80&w=1400&auto=format&fit=crop');"></div>
+        </div>
+        <button class="control prev" aria-label="Previous">‹</button>
+        <button class="control next" aria-label="Next">›</button>
+      </div>
+      <div class="dots" id="sliderDots"></div>
+    </section>
+
+    <!-- Feature band -->
+    <section class="feature">
+      <div class="container feature-grid">
+        <div>
+          <div class="eyebrow">Sparkle endlessly with</div>
+          <div class="sp-12"></div>
+          <h2 class="display">Exclusive diamond designs</h2>
+          <div class="sp-24"></div>
+          <p style="color:var(--muted)">We work with master jewellers to craft stunning pieces made to be treasured. Discover earrings, bracelets and necklaces designed to catch the light from every angle.</p>
+          <div class="sp-24"></div>
+          <a class="button alt" href="#">Shop diamonds</a>
+          <div class="sp-12"></div>
+          <span class="chip">Premium Grade</span>
+        </div>
+        <div class="portrait" style="background-image:url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?q=80&w=1200&auto=format&fit=crop');"></div>
+      </div>
+    </section>
+
+    <!-- Split features -->
+    <section class="split">
+      <div class="container split-grid">
+        <div class="tile">
+          <div class="image" style="background-image:url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200&auto=format&fit=crop');"></div>
+          <div class="content">
+            <div class="eyebrow">Premium Grade</div>
+            <div class="sp-12"></div>
+            <h3 class="headline">Gold Plated Bracelet</h3>
+            <p style="color:var(--muted)">Solid gold jewellery known for its durability and strength.</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="image" style="background-image:url('https://images.unsplash.com/photo-1611003223434-1f2b3b5cd5df?q=80&w=1200&auto=format&fit=crop');"></div>
+          <div class="content">
+            <div class="eyebrow">Hand-made</div>
+            <div class="sp-12"></div>
+            <h3 class="headline">Creative Design Earrings</h3>
+            <p style="color:var(--muted)">Impeccable quality gold jewellery highly recommended by you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA band -->
+    <section class="cta">
+      <div class="container">
+        <article class="panel">
+          <div class="pad">
+            <div class="eyebrow">Infinite Sparkle</div>
+            <div class="sp-12"></div>
+            <h2 class="display">We're best in crafting the best jewellery</h2>
+            <div class="sp-24"></div>
+            <a class="button" href="#">Find a store</a>
+            <div class="sp-12"></div>
+            <span class="chip">Excellent quality • Free returns</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h4>Personalised jewellery designed for you.</h4>
+        <p>Let your jewellery light up the season with bespoke pieces.</p>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#">Our Story</a>
+        <a href="#">All Brands</a>
+        <a href="#">Craft</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Delivery & Returns</a>
+        <a href="#">Pre‑order Policy</a>
+        <a href="#">Care Guide</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="container" style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(233,178,107,.14); padding-top:16px;">
+      <div>© Design by AIE Studio 2025</div>
+      <div class="brand">Sapphire®</div>
+    </div>
+  </footer>
+  <script>
+    // Mobile menu toggle
+    const navToggle = document.getElementById('navToggle');
+    const mainMenu = document.getElementById('mainMenu');
+    if (navToggle && mainMenu) {
+      navToggle.addEventListener('click', () => {
+        mainMenu.classList.toggle('open');
+        navToggle.classList.toggle('active');
+      });
+    }
+
+    // Simple slider
+    const slider = document.getElementById('heroSlider');
+    if (slider) {
+      const track = slider.querySelector('.slides');
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const prev = slider.querySelector('.prev');
+      const next = slider.querySelector('.next');
+      const dotsWrap = document.getElementById('sliderDots');
+      let index = 0;
+
+      const update = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dotsWrap.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === index));
+      };
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => { index = i; update(); });
+        dotsWrap.appendChild(dot);
+      });
+
+      prev.addEventListener('click', () => { index = (index - 1 + slides.length) % slides.length; update(); });
+      next.addEventListener('click', () => { index = (index + 1) % slides.length; update(); });
+
+      // Auto-advance
+      setInterval(() => { index = (index + 1) % slides.length; update(); }, 5000);
+    }
+
+    // Gold rates demo updater (mock data)
+    const rate24El = document.getElementById('rate24');
+    const rate22El = document.getElementById('rate22');
+    const rateUpdEl = document.getElementById('rateUpdated');
+    if (rate24El && rate22El && rateUpdEl) {
+      const base24 = 290.0; // AED/g demo
+      const base22 = 270.0; // AED/g demo
+      const format = v => `AED ${v.toFixed(2)}`;
+      const refresh = () => {
+        const jitter24 = base24 + (Math.random() - 0.5) * 2;
+        const jitter22 = base22 + (Math.random() - 0.5) * 2;
+        rate24El.textContent = format(jitter24);
+        rate22El.textContent = format(jitter22);
+        const now = new Date();
+        rateUpdEl.textContent = `Updated: ${now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+      };
+      refresh();
+      setInterval(refresh, 15000);
+    }
+
+    // Schemes accordion/details
+    const schemeData = {
+      investment: {
+        title: 'Investment Scheme',
+        desc: 'Invest in gold for long-term wealth. Secure your future with our investment schemes.',
+        points: [
+          'Fixed deposit for 1 year',
+          'Guaranteed returns',
+          'No hidden charges'
+        ],
+        meta: {
+          number: 'GIS/0001',
+          carat: '24',
+          startDate: '01/01/2025',
+          endDate: '-',
+          status: 'Active',
+          penalty: 'AED 50',
+          nextInstallment: '01/02/2025'
+        },
+        graph: {
+          start: 'Month 1',
+          end: 'Month 12',
+          current: 'Month 1',
+          completed: '1/12',
+          remaining: '11 months'
+        }
+      },
+      monthly6: {
+        title: 'Monthly Scheme (6 months)',
+        desc: 'Deposit a fixed amount each month for 6 months. Get up to 8% of the total contribution as a jewellery purchase voucher. Early redemption allowed after 3 months.',
+        points: [
+          'Flexible monthly deposit starting AED 100',
+          'Locked gold rate on purchase day',
+          'No hidden charges'
+        ],
+        meta: {
+          number: 'MIS/0001',
+          carat: '24',
+          startDate: '01/01/2025',
+          endDate: '-',
+          status: 'Active',
+          penalty: 'AED 50',
+          nextInstallment: '01/02/2025'
+        },
+        graph: {
+          start: 'Month 1',
+          end: 'Month 6',
+          current: 'Month 1',
+          completed: '1/6',
+          remaining: '5 months'
+        }
+      },
+      monthly12: {
+        title: 'Monthly Scheme (12 months)',
+        desc: 'Deposit a fixed amount each month for 12 months. Get up to 8% of the total contribution as a jewellery purchase voucher. Early redemption allowed after 6 months.',
+        points: [
+          'Flexible monthly deposit starting AED 100',
+          'Locked gold rate on purchase day',
+          'No hidden charges'
+        ],
+        meta: {
+          number: 'MIS/0002',
+          carat: '24',
+          startDate: '01/01/2025',
+          endDate: '-',
+          status: 'Active',
+          penalty: 'AED 50',
+          nextInstallment: '01/02/2025'
+        },
+        graph: {
+          start: 'Month 1',
+          end: 'Month 12',
+          current: 'Month 1',
+          completed: '1/12',
+          remaining: '11 months'
+        }
+      }
+    };
+
+    const schemeList = document.getElementById('schemeList');
+    const schemeDetails = document.getElementById('schemeDetails');
+    if (schemeList && schemeDetails) {
+      const titleEl = document.getElementById('schemeTitle');
+      const descEl = document.getElementById('schemeDesc'); // This will be removed
+      const pointsEl = document.getElementById('schemePoints'); // This will be removed
+      const apply = key => {
+        const d = schemeData[key];
+        if (!d) return;
+        titleEl.textContent = d.title;
+
+        // Update meta details
+        const schemeNumberEl = document.getElementById('schemeNumber');
+        const schemeCaratEl = document.getElementById('schemeCarat');
+        const schemeStartDateEl = document.getElementById('schemeStartDate');
+        const schemeEndDateEl = document.getElementById('schemeEndDate');
+        const monthlyDetails = document.getElementById('monthlyDetails');
+        const monthlyDetails2 = document.getElementById('monthlyDetails2');
+        const schemeStatusEl = document.getElementById('schemeStatus');
+        const monthlyDetails3 = document.getElementById('monthlyDetails3');
+        const monthlyDetails4 = document.getElementById('monthlyDetails4');
+        const schemeGraph = document.getElementById('schemeGraph');
+        const progressFill = document.getElementById('progressFill');
+        const progressCurrent = document.getElementById('progressCurrent');
+        const progressEnd = document.getElementById('progressEnd');
+        const completedMonths = document.getElementById('completedMonths');
+        const remainingMonths = document.getElementById('remainingMonths');
+
+        schemeNumberEl.textContent = d.meta.number;
+        schemeCaratEl.textContent = d.meta.carat;
+        schemeStartDateEl.textContent = d.meta.startDate;
+        schemeEndDateEl.textContent = d.meta.endDate;
+        schemeStatusEl.textContent = d.meta.status;
+        
+        // Show/hide monthly-specific details
+        const isMonthly = key.includes('monthly');
+        monthlyDetails.style.display = isMonthly ? 'flex' : 'none';
+        monthlyDetails2.style.display = isMonthly ? 'flex' : 'none';
+        monthlyDetails3.style.display = isMonthly ? 'flex' : 'none';
+        monthlyDetails4.style.display = isMonthly ? 'flex' : 'none';
+        
+        if (isMonthly) {
+          // Update monthly scheme details
+          const bonusEl = document.getElementById('schemeBonus');
+          const amountEl = document.getElementById('schemeAmount');
+          const penaltyEl = document.getElementById('schemePenalty');
+          const nextInstallmentEl = document.getElementById('schemeNextInstallment');
+          
+          if (bonusEl) bonusEl.textContent = 'With Bonus';
+          if (amountEl) amountEl.textContent = key === 'monthly6' ? 'AED 500/month' : 'AED 300/month';
+          if (penaltyEl) penaltyEl.textContent = 'AED 50';
+          if (nextInstallmentEl) nextInstallmentEl.textContent = '01/02/2025';
+        }
+
+        // Update progress graph for monthly schemes
+        if (d.graph && isMonthly) {
+          schemeGraph.style.display = 'block';
+          const totalMonths = key === 'monthly6' ? 6 : 12;
+          const completed = 1; // You can make this dynamic
+          const progressPercentage = (completed / totalMonths) * 100;
+          
+          progressFill.style.width = `${progressPercentage}%`;
+          progressCurrent.textContent = `Month ${completed}`;
+          progressEnd.textContent = `Month ${totalMonths}`;
+          completedMonths.textContent = `${completed}/${totalMonths}`;
+          remainingMonths.textContent = `${totalMonths - completed} months`;
+        } else {
+          schemeGraph.style.display = 'none';
+        }
+      };
+      schemeList.querySelectorAll('.scheme-item').forEach(item => {
+        item.addEventListener('click', () => {
+          schemeList.querySelectorAll('.scheme-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          apply(item.getAttribute('data-id'));
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+
+
+
