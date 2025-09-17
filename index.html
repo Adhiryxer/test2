@@ -175,6 +175,78 @@
       max-height: 90vh; 
       overflow-y: auto; 
     }
+
+    /* Bank Details Modal */
+    .bank-modal { 
+      width: min(500px, 94vw); 
+      max-height: 90vh; 
+      overflow-y: auto; 
+    }
+
+    /* Paid Details Modal */
+    .paid-details-modal { 
+      width: min(800px, 94vw); 
+      max-height: 90vh; 
+      overflow-y: auto; 
+    }
+    .paid-details-icon:hover {
+      background: rgba(233,178,107,.1) !important;
+      transform: scale(1.1);
+    }
+    .paid-detail-value.status.paid {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .paid-detail-value.status.pending {
+      background: rgba(251, 191, 36, 0.1);
+      color: #f59e0b;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+    .paid-detail-value.status.overdue {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .receipt-icon-btn:hover:not(:disabled) {
+      background: rgba(233,178,107,.1) !important;
+      transform: scale(1.1);
+    }
+    .receipt-icon-btn:disabled {
+      opacity: 0.5;
+    }
+    .bank-details {
+      background: rgba(233,178,107,.05); 
+      border: 1px solid rgba(233,178,107,.15); 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+    }
+    .bank-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(233,178,107,.1);
+    }
+    .bank-detail-row:last-child {
+      border-bottom: none;
+    }
+    .bank-detail-label {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .bank-detail-value {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      font-family: monospace;
+    }
+    .bank-detail-value.iban {
+      font-size: 12px;
+      word-break: break-all;
+    }
     .loyalty-modal::-webkit-scrollbar {
       width: 6px;
     }
@@ -843,6 +915,7 @@
   <!-- Profile Dropdown -->
   <div class="dropdown" id="profileDropdown">
     <a href="#" id="openProfile">Profile</a>
+    <a href="#" id="openBankDetails">Bank Details</a>
     <a href="#" id="logoutBtn">Logout</a>
   </div>
 
@@ -923,7 +996,12 @@
             </div>
           </div>
           <div class="scheme-details" id="schemeDetails">
-            <h3 style="margin:0 0 8px" id="schemeTitle">Investment Scheme</h3>
+            <h3 style="margin:0 0 8px; display: flex; align-items: center; gap: 8px;" id="schemeTitle">
+              Investment Scheme
+              <button class="paid-details-icon" id="paidDetailsBtn" title="View Paid Details" style="background: none; border: none; color: var(--accent-2); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: all 0.2s ease;">
+                💰
+              </button>
+            </h3>
             <div class="scheme-meta">
               <div class="meta-row">
                 <span class="meta-label">Scheme Number:</span>
@@ -1112,8 +1190,8 @@
             <p style="color:var(--muted)">Impeccable quality gold jewellery highly recommended by you.</p>
           </div>
         </div>
-      </div> -->
-    </section>
+      </div> 
+    </section>-->
 
     <!-- CTA band -->
     <!-- <section class="cta">
@@ -1237,6 +1315,136 @@
       <div class="actions">
         <button class="button" id="loyaltyHistoryCloseBtn">Close</button>
         <button class="button primary" id="redeemPointsBtn">Redeem Points</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bank Details Modal -->
+  <div class="modal-overlay" id="bankDetailsModal">
+    <div class="modal bank-modal" role="dialog" aria-modal="true" aria-labelledby="bankDetailsTitle">
+      <header>
+        <h3 id="bankDetailsTitle">Bank Details</h3>
+        <button class="close" id="bankDetailsClose" aria-label="Close">✕</button>
+      </header>
+      <div class="content">
+        <div class="bank-details">
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Account Name:</span>
+            <span class="bank-detail-value">Venu</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Account Number:</span>
+            <span class="bank-detail-value">1015838450000</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Bank Name:</span>
+            <span class="bank-detail-value">NBD</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Branch Name:</span>
+            <span class="bank-detail-value">RCH</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">BIC Code:</span>
+            <span class="bank-detail-value">XXX</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">IBAN:</span>
+            <span class="bank-detail-value iban">AE770260XXXXXXXXXX</span>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="button" id="bankDetailsCloseBtn">Close</button>
+        <button class="button primary" id="copyBankDetailsBtn">Copy Details</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paid Details Modal -->
+  <div class="modal-overlay" id="paidDetailsModal">
+    <div class="modal paid-details-modal" role="dialog" aria-modal="true" aria-labelledby="paidDetailsTitle">
+      <header>
+        <h3 id="paidDetailsTitle">Investment Scheme - Paid Details</h3>
+        <button class="close" id="paidDetailsClose" aria-label="Close">✕</button>
+      </header>
+      <div class="content">
+        <div style="background: rgba(233,178,107,.05); border: 1px solid rgba(233,178,107,.15); border-radius: 12px; padding: 20px;">
+          <h4 style="margin: 0 0 16px; color: var(--accent-2); font-size: 16px;">Paid Details</h4>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid rgba(233,178,107,.2);">
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Amount</th>
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Due Date</th>
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Bonus</th>
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Bonus Amount</th>
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Paid Date</th>
+                  <th style="padding: 12px 8px; text-align: left; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Status</th>
+                  <th style="padding: 12px 8px; text-align: center; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Receipt</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid rgba(233,178,107,.1);">
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 5,000.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">15/02/2025</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">5%</td>
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 250.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">10/02/2025</td>
+                  <td style="padding: 12px 8px;">
+                    <span class="paid-detail-value status paid" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">Paid</span>
+                  </td>
+                  <td style="padding: 12px 8px; text-align: center;">
+                    <button class="receipt-icon-btn" style="background: none; border: none; color: var(--accent-2); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: all 0.2s ease;" title="Download Receipt">📄</button>
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(233,178,107,.1);">
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 3,500.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">15/01/2025</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">3%</td>
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 105.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">12/01/2025</td>
+                  <td style="padding: 12px 8px;">
+                    <span class="paid-detail-value status paid" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">Paid</span>
+                  </td>
+                  <td style="padding: 12px 8px; text-align: center;">
+                    <button class="receipt-icon-btn" style="background: none; border: none; color: var(--accent-2); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: all 0.2s ease;" title="Download Receipt">📄</button>
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(233,178,107,.1);">
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 2,000.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">15/12/2024</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">4%</td>
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 80.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">14/12/2024</td>
+                  <td style="padding: 12px 8px;">
+                    <span class="paid-detail-value status paid" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">Paid</span>
+                  </td>
+                  <td style="padding: 12px 8px; text-align: center;">
+                    <button class="receipt-icon-btn" style="background: none; border: none; color: var(--accent-2); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: all 0.2s ease;" title="Download Receipt">📄</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 1,500.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">15/11/2024</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">2%</td>
+                  <td style="padding: 12px 8px; color: var(--accent-2); font-weight: 700; font-size: 14px;">AED 30.00</td>
+                  <td style="padding: 12px 8px; color: var(--text); font-weight: 600; font-size: 14px;">16/11/2024</td>
+                  <td style="padding: 12px 8px;">
+                    <span class="paid-detail-value status pending" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">Pending</span>
+                  </td>
+                  <td style="padding: 12px 8px; text-align: center;">
+                    <button class="receipt-icon-btn" style="background: none; border: none; color: var(--muted); cursor: not-allowed; font-size: 18px; padding: 4px; border-radius: 4px; transition: all 0.2s ease;" title="Receipt not available" disabled>📄</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="button" id="paidDetailsCloseBtn">Close</button>
+        <button class="button primary" id="downloadReceiptBtn">Download Receipt</button>
       </div>
     </div>
   </div>
@@ -1859,6 +2067,7 @@
     const profileBtn = document.getElementById('profileBtn');
     const profileDropdown = document.getElementById('profileDropdown');
     const openProfile = document.getElementById('openProfile');
+    const openBankDetails = document.getElementById('openBankDetails');
     const logoutBtn = document.getElementById('logoutBtn');
     if (profileBtn && profileDropdown) {
       profileBtn.addEventListener('click', (e) => {
@@ -1893,6 +2102,14 @@
         e.preventDefault();
         profileDropdown.classList.remove('open');
         const modal = document.getElementById('profileModal');
+        if (modal) modal.classList.add('open');
+      });
+    }
+    if (openBankDetails) {
+      openBankDetails.addEventListener('click', (e) => {
+        e.preventDefault();
+        profileDropdown.classList.remove('open');
+        const modal = document.getElementById('bankDetailsModal');
         if (modal) modal.classList.add('open');
       });
     }
@@ -1947,6 +2164,96 @@
         closeProfile();
       });
     }
+
+    // Bank Details modal controls
+    const bankDetailsModal = document.getElementById('bankDetailsModal');
+    const bankDetailsClose = document.getElementById('bankDetailsClose');
+    const bankDetailsCloseBtn = document.getElementById('bankDetailsCloseBtn');
+    const copyBankDetailsBtn = document.getElementById('copyBankDetailsBtn');
+    const closeBankDetails = () => { if (bankDetailsModal) bankDetailsModal.classList.remove('open'); };
+    if (bankDetailsClose) bankDetailsClose.addEventListener('click', closeBankDetails);
+    if (bankDetailsCloseBtn) bankDetailsCloseBtn.addEventListener('click', closeBankDetails);
+    if (bankDetailsModal) bankDetailsModal.addEventListener('click', (e) => { if (e.target === bankDetailsModal) closeBankDetails(); });
+    
+    // Copy bank details functionality
+    if (copyBankDetailsBtn) {
+      copyBankDetailsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const bankDetails = {
+          'Account Name': 'Venu',
+          'Account Number': '1015838450000',
+          'Bank Name': 'NBD',
+          'Branch Name': 'RCH',
+          'BIC Code': 'XXX',
+          'IBAN': 'AE770260XXXXXXXXXX'
+        };
+        
+        const bankDetailsText = Object.entries(bankDetails)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join('\n');
+        
+        navigator.clipboard.writeText(bankDetailsText).then(() => {
+          // Show success feedback
+          const originalText = copyBankDetailsBtn.textContent;
+          copyBankDetailsBtn.textContent = 'Copied!';
+          copyBankDetailsBtn.style.background = '#22c55e';
+          setTimeout(() => {
+            copyBankDetailsBtn.textContent = originalText;
+            copyBankDetailsBtn.style.background = '';
+          }, 2000);
+        }).catch(() => {
+          alert('Bank Details:\n\n' + bankDetailsText);
+        });
+      });
+    }
+
+    // Paid Details modal controls
+    const paidDetailsBtn = document.getElementById('paidDetailsBtn');
+    const paidDetailsModal = document.getElementById('paidDetailsModal');
+    const paidDetailsClose = document.getElementById('paidDetailsClose');
+    const paidDetailsCloseBtn = document.getElementById('paidDetailsCloseBtn');
+    const downloadReceiptBtn = document.getElementById('downloadReceiptBtn');
+    
+    const closePaidDetails = () => { 
+      if (paidDetailsModal) paidDetailsModal.classList.remove('open'); 
+    };
+    
+    if (paidDetailsBtn) {
+      paidDetailsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (paidDetailsModal) paidDetailsModal.classList.add('open');
+      });
+    }
+    
+    if (paidDetailsClose) paidDetailsClose.addEventListener('click', closePaidDetails);
+    if (paidDetailsCloseBtn) paidDetailsCloseBtn.addEventListener('click', closePaidDetails);
+    if (paidDetailsModal) paidDetailsModal.addEventListener('click', (e) => { 
+      if (e.target === paidDetailsModal) closePaidDetails(); 
+    });
+    
+    if (downloadReceiptBtn) {
+      downloadReceiptBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Receipt download functionality would be implemented here.\n\nReceipt Details:\n• Investment Scheme: GIS/0001\n• Amount: AED 5,000.00\n• Bonus: AED 250.00\n• Total: AED 5,250.00\n• Paid Date: 10/02/2025\n• Status: Paid');
+      });
+    }
+
+    // Handle individual receipt icon clicks
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('receipt-icon-btn') && !e.target.disabled) {
+        e.preventDefault();
+        const row = e.target.closest('tr');
+        const cells = row.querySelectorAll('td');
+        const amount = cells[0].textContent;
+        const dueDate = cells[1].textContent;
+        const bonus = cells[2].textContent;
+        const bonusAmount = cells[3].textContent;
+        const paidDate = cells[4].textContent;
+        const status = cells[5].textContent.trim();
+        
+        alert(`Receipt Download\n\nPayment Details:\n• Amount: ${amount}\n• Due Date: ${dueDate}\n• Bonus: ${bonus}\n• Bonus Amount: ${bonusAmount}\n• Paid Date: ${paidDate}\n• Status: ${status}\n\nReceipt will be downloaded shortly.`);
+      }
+    });
   </script>
 </body>
 </html>
